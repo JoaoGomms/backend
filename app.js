@@ -14,6 +14,7 @@ function generateCode() {
   return text;
 }
 
+// um método de encurtar uma URL persistindo-a no banco de dados.
 app.post('/new',express.json(),  async (req, res) => {
   const url = req.body.url;
 
@@ -33,7 +34,7 @@ app.post('/new',express.json(),  async (req, res) => {
 
 
 
-
+// um método que retorna uma url encurtada conforme o encurtamento da URL.
 app.get('/code/:code', async (req, res, next) => {
   const code = req.params.code;
  
@@ -46,6 +47,7 @@ app.get('/code/:code', async (req, res, next) => {
   res.send(resultado.url);
 })
 
+// um método que retorna uma url encurtada conforme um id.
 app.get('/findById/:id', async (req, res, next) => {
   const id = req.params.id;
  
@@ -64,7 +66,7 @@ app.get('/findById/:id', async (req, res, next) => {
 })
 
 
-
+// um método que retorna todas as URLs encurtadas em uma data específica.
 app.post('/date', express.json(), async (req, res, next) => {
   const createdAt = req.body.createdAt;
 
