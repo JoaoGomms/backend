@@ -21,6 +21,10 @@ const Link = database.define('link', {
         type: Sequelize.INTEGER,
         allowNull: true,
         defaultValue: 0
+    },
+    createdAt: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
 })
  

@@ -15,12 +15,16 @@ function generateCode() {
 }
 
 app.post('/new',express.json(),  async (req, res) => {
-  const code = generateCode();
   const url = req.body.url;
+
+  const code = generateCode();
+  const dateObject = new Date();
+  const createdAt = `${dateObject.getDate().toString()}/${(dateObject.getMonth() + 1).toString()}/${dateObject.getFullYear().toString()}`;
 
   const resultado = await Link.create({
     url,
-    code
+    code,
+    createdAt
   })
 
   res.send(`${process.env.DOMAIN}${code}`);
@@ -30,7 +34,7 @@ app.post('/new',express.json(),  async (req, res) => {
 
 
 
-app.get('/:code', async (req, res, next) => {
+app.get('/code/:code', async (req, res, next) => {
   const code = req.params.code;
  
   const resultado = await Link.findOne({ where: { code } });
@@ -39,8 +43,44 @@ app.get('/:code', async (req, res, next) => {
   resultado.hits++;
   await resultado.save();
  
-  res.redirect(resultado.url);
+  res.send(resultado.url);
 })
+
+app.get('/findById/:id', async (req, res, next) => {
+  const id = req.params.id;
+ 
+  const resultado = await Link.findOne({ where: { id } });
+
+  const all = await Link.findAll({})
+
+  console.log(all)
+
+  if (!resultado) return res.sendStatus(404);
+ 
+  resultado.hits++;
+  await resultado.save();
+ 
+  res.send(resultado.url);
+})
+
+
+
+app.post('/date', express.json(), async (req, res, next) => {
+  const createdAt = req.body.createdAt;
+
+  const resultado = await Link.findAll({ where: { createdAt } });
+  if (!resultado) return res.sendStatus(404);
+
+  for(var each in resultado){
+    each.hits++
+   
+  }
+
+  res.send(resultado)
+ 
+})
+
+
 
 
 
