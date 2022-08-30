@@ -5,6 +5,7 @@ const sequelize = require("./db");
 const Link = require('./models');
 const swaggerUi = require('swagger-ui-express')
 const swaggerFile = require('./swagger_output.json')
+const path = require('path');
 
 sequelize.sync(() => console.log(`Banco de dados conectado: ${process.env.DB_NAME}`));
 
@@ -86,7 +87,7 @@ app.post('/date', express.json(), async (req, res, next) => {
 
 app.get('/hello', async (req, res, next) => {
 
-  res.send('Hello World')
+  res.sendFile(path.join(__dirname, '/index.html'));
  
 })
 
