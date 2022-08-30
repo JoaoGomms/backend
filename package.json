@@ -10,6 +10,6 @@
   },
   "scripts": {
     "dev": "nodemon app.js",
-    "start": "node app.js"
+    "start": "npm install && node app.js"
   }
 }
