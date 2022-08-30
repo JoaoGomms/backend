@@ -82,6 +82,11 @@ app.post('/date', express.json(), async (req, res, next) => {
  
 })
 
+app.get('/hello', async (req, res, next) => {
+
+  res.send('Hello World')
+ 
+})
 
 
 
