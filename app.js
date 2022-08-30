@@ -3,6 +3,8 @@ const app = express()
 require('dotenv').config()
 const sequelize = require("./db");
 const Link = require('./models');
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json')
 
 sequelize.sync(() => console.log(`Banco de dados conectado: ${process.env.DB_NAME}`));
 
@@ -93,4 +95,5 @@ app.get('/hello', async (req, res, next) => {
 
 app.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}`)
+  app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 })
